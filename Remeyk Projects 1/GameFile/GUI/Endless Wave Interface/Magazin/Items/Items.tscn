@@ -1,0 +1,244 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://GameFile/GUI/Endless Wave Interface/Magazin/Items/Items.gd" type="Script" id=1]
+[ext_resource path="res://GameFile/GUI/Endless Wave Interface/Info_Panel/img/пушка.png" type="Texture" id=2]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.976471, 0.956863, 0.956863, 0.117647 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0.545098, 0.133333, 0.752941, 1 )
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="Theme" id=2]
+Button/styles/focus = SubResource( 3 )
+Label/colors/font_color = Color( 0.376471, 0.819608, 0.819608, 1 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.180392, 0.105882, 0.239216, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0.337255, 0.368627, 0.184314, 1 )
+
+[sub_resource type="ButtonGroup" id=4]
+
+[sub_resource type="Animation" id=5]
+resource_name = "Flashing1"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/GridContainer/Gold/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Flashing2"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/GridContainer/Metal/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 0.966141 ), Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Flashing2"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/GridContainer/Metal/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 0.966141 ), Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ), Color( 1, 0.937255, 0.937255, 1 ), Color( 1, 0, 0, 0 ) ]
+}
+
+[node name="Items" type="Panel" groups=["Items"]]
+margin_right = 175.0
+margin_bottom = 106.0
+rect_min_size = Vector2( 175, 106 )
+theme = SubResource( 2 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 8
+custom_constants/margin_top = 3
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 3.0
+margin_right = 167.0
+margin_bottom = 103.0
+rect_min_size = Vector2( 157, 100 )
+mouse_filter = 2
+custom_constants/separation = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
+margin_right = 52.0
+margin_bottom = 100.0
+mouse_filter = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/CenterContainer"]
+margin_top = 20.0
+margin_right = 52.0
+margin_bottom = 79.0
+texture = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+margin_left = 57.0
+margin_right = 157.0
+margin_bottom = 100.0
+custom_constants/separation = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+margin_right = 100.0
+margin_bottom = 18.0
+custom_constants/margin_top = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+margin_top = 4.0
+margin_right = 100.0
+margin_bottom = 18.0
+
+[node name="_Name" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/MarginContainer/CenterContainer"]
+margin_left = 31.0
+margin_right = 69.0
+margin_bottom = 14.0
+text = "Name"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+modulate = Color( 0.270588, 0.686275, 0.913725, 1 )
+margin_top = 23.0
+margin_right = 100.0
+margin_bottom = 91.0
+rect_pivot_offset = Vector2( -432, -71 )
+mouse_filter = 2
+custom_constants/hseparation = 8
+columns = 2
+
+[node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_right = 48.0
+margin_bottom = 14.0
+text = "Damag:"
+
+[node name="Damag" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 56.0
+margin_right = 100.0
+margin_bottom = 14.0
+size_flags_vertical = 3
+text = "-0nrhrr"
+align = 1
+valign = 1
+
+[node name="Label5" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_top = 18.0
+margin_right = 48.0
+margin_bottom = 32.0
+text = "Type:"
+
+[node name="Type" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 56.0
+margin_top = 18.0
+margin_right = 100.0
+margin_bottom = 32.0
+size_flags_vertical = 3
+text = "-0nrhrr"
+align = 1
+valign = 1
+
+[node name="Label7" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_top = 36.0
+margin_right = 48.0
+margin_bottom = 50.0
+text = "Gold:"
+
+[node name="Gold" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 56.0
+margin_top = 36.0
+margin_right = 100.0
+margin_bottom = 50.0
+size_flags_vertical = 3
+text = "-0nrhrr"
+align = 1
+valign = 1
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer/Gold"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 1, 0, 0, 0 )
+
+[node name="Label9" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_top = 54.0
+margin_right = 48.0
+margin_bottom = 68.0
+text = "Metal:"
+
+[node name="Metal" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 56.0
+margin_top = 54.0
+margin_right = 100.0
+margin_bottom = 68.0
+size_flags_vertical = 3
+text = "-0nrhrr"
+align = 1
+valign = 1
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/HBoxContainer/VBoxContainer/GridContainer/Metal"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 1, 0, 0, 0 )
+
+[node name="Button" type="Button" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 1
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+action_mode = 0
+enabled_focus_mode = 1
+group = SubResource( 4 )
+flat = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Flashing1 = SubResource( 5 )
+anims/Flashing2 = SubResource( 6 )
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+anims/Flashing2 = SubResource( 7 )
+
+[connection signal="mouse_entered" from="." to="." method="_on_Items_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Items_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_buying_weapons"]

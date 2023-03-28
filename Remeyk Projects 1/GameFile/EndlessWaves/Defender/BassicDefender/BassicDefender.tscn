@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://GameFile/EndlessWaves/Defender/BassicDefender/BassicDefender.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 40, 40 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 0.1, 0.1 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 40, 40 )
+
+[node name="BassicDefender" type="StaticBody2D" groups=["Defender"]]
+collision_layer = 4
+collision_mask = 2
+input_pickable = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+Cooldown = 0.7
+
+[node name="_Is_colliding_Weapons" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="_Is_colliding_Weapons"]
+shape = SubResource( 5 )
+
+[node name="_Is_colliding_Planet" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="_Is_colliding_Planet"]
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 4 )
+
+[node name="Icon_gun" type="Sprite" parent="."]
+visible = false
+
+[connection signal="input_event" from="." to="." method="_on_BassicDefender_input_event"]
+[connection signal="body_entered" from="_Is_colliding_Weapons" to="." method="_on_Is_colliding_Weapons_body" binds= [ true ]]
+[connection signal="body_exited" from="_Is_colliding_Weapons" to="." method="_on_Is_colliding_Weapons_body" binds= [ false ]]
+[connection signal="area_entered" from="_Is_colliding_Planet" to="." method="_on_Is_colliding_Planet_area_" binds= [ true ]]
+[connection signal="area_exited" from="_Is_colliding_Planet" to="." method="_on_Is_colliding_Planet_area_" binds= [ false ]]
