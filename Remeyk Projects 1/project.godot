@@ -33,13 +33,25 @@ _global_script_classes=[ {
 "class": "BassicDefender",
 "language": "GDScript",
 "path": "res://GameFile/EndlessWaves/Defender/BassicDefender/BassicDefender.gd"
+}, {
+"base": "Area2D",
+"class": "BassicEnemies",
+"language": "GDScript",
+"path": "res://GameFile/EndlessWaves/Enemies/BassicEnemies/BassicEnemies.gd"
+}, {
+"base": "Node",
+"class": "Pool",
+"language": "GDScript",
+"path": "res://GameFile/EndlessWaves/Enemies/Pool_Maneger/Class_Pool.gd"
 } ]
 _global_script_class_icons={
 "AntialiasedLine2D": "res://addons/antialiased_line2d/antialiased_line2d.svg",
 "AntialiasedPolygon2D": "res://addons/antialiased_line2d/antialiased_polygon2d.svg",
 "AntialiasedRegularPolygon2D": "res://addons/antialiased_line2d/antialiased_regular_polygon2d.svg",
 "BassicBullet": "",
-"BassicDefender": ""
+"BassicDefender": "",
+"BassicEnemies": "",
+"Pool": ""
 }
 
 [application]
@@ -58,6 +70,10 @@ Events="*res://GameFile/EndlessWaves/Game/Events.gd"
 
 enabled=PoolStringArray( "res://addons/antialiased_line2d/plugin.cfg" )
 
+[global]
+
+"максималь"=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
@@ -66,11 +82,10 @@ common/drop_mouse_on_gui_input_disabled=true
 
 2d_physics/layer_1="World"
 2d_physics/layer_2="Planet"
-2d_physics/layer_3="Defender"
-2d_physics/layer_4="Asteroids"
+2d_physics/layer_3="Weapons"
+2d_physics/layer_4="Enemies"
 2d_physics/layer_5="Bullet"
 2d_physics/layer_6="Skaner"
-2d_physics/layer_7="Grid_Map"
 
 [physics]
 

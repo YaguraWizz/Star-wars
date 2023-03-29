@@ -15,7 +15,7 @@ func _on_Button_pressed(_Button):
 		pass
 	elif _Button==1:
 		Pause()
-		get_tree().change_scene("res://GameFile/GUI/Start menu/Main_Menu.tscn")
+		var _path=get_tree().change_scene("res://GameFile/GUI/Start menu/Main_Menu.tscn")
 		pass
 	pass
 

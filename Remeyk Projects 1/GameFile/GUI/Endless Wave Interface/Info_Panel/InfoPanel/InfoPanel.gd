@@ -241,14 +241,13 @@ func not_M():
 
 #-----------------------------------------------------------
 func _Move():
-	if Mounted_Weapons!=null and Globals.BAR._Having_Money_G_M_():
-		Mounted_Weapons._set_is_dragMouse(true)
+	if Mounted_Weapons==null:return 
+	Mounted_Weapons._set_is_dragMouse(true)
 #-----------------------------------------------------------
 #-----------------------------------------------------------
 
 func _on_Button_pressed():
 	Globals.BAR.sell_the_gun(Mounted_Weapons.get_Gold()/2,Mounted_Weapons.get_Metal()/2)
 	visible_=false
-	
 	Mounted_Weapons=Mounted_Weapons.weapon_removal()
 	pass # Replace with function body.

@@ -44,6 +44,7 @@ tracks/0/keys = {
 }
 
 [node name="Asteroid" type="Area2D" groups=["ASTEROID"]]
+position = Vector2( 467, 266 )
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 1 )
@@ -70,8 +71,6 @@ anims/RESET = SubResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 20.0
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [node name="Position2D" type="Position2D" parent="."]
 position = Vector2( 26, 0 )

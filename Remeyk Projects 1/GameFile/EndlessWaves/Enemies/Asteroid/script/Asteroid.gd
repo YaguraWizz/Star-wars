@@ -68,7 +68,7 @@ func take_damage(_damage):
 		#get_tree().call_group("Bar","update_Elixir",diamond)
 		get_tree().call_group("Bar","update_gold",rand_range(0,3))
 		Globals.EndlessWaves.anim_ded(global_position)
-		queue_free()
+		#queue_free()
 
 func slowdown(_slowdown:float)->void:
 	if HP_comet>0 and oneshot:
@@ -86,4 +86,4 @@ func test_UI(vec:Vector2)->void:
 
 func _on_Timer_timeout():
 	show()
-	queue_free()
+	#queue_free()

@@ -126,11 +126,12 @@ func _Having_Money_G_M_(_G:int,_M:int,ID:Object)->bool:
 		ID.not_M()
 	return false
 
-func sell_the_gun(_G:float,_M:float):
+func sell_the_gun(_G:int,_M:int):
 	update_gold(_G)
 	update_Metal(_M)
 	pass
-func have_money_to_level_up(_G:float,_M:float):
+	
+func have_money_to_level_up(_G:int,_M:int):
 	var money_G=get_gold()-_G>=0
 	var money_M=get_Metal()-_M>=0
 	if money_G and money_M:

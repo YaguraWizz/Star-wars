@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://GameFile/EndlessWaves/Enemies/BassicEnemies/BassicEnemies.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GameFile/EndlessWaves/Enemies/BassicEnemies/All_Asteroids/Fiery_Asteroid/Fiery_Asteroid.gd" type="Script" id=2]
+[ext_resource path="res://Images/Endless Waves/Comets/comets1/Asteroids.png" type="Texture" id=3]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 8.0
+height = 82.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "Flay_asteroid"
+length = 10.4
+step = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemies:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8, 1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 7.6, 8, 8.4, 8.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Enemies:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[node name="Fiery_Asteroid" instance=ExtResource( 1 )]
+position = Vector2( 326, 179 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" parent="." index="0"]
+rotation = 1.5708
+shape = SubResource( 4 )
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "Flay_asteroid"
+anims/Flay_asteroid = SubResource( 2 )
+anims/RESET = SubResource( 3 )
+
+[node name="Enemies" parent="." index="2"]
+texture = ExtResource( 3 )
+hframes = 7
+vframes = 4
+
+[node name="Position" parent="." index="3"]
+position = Vector2( 43, 0 )

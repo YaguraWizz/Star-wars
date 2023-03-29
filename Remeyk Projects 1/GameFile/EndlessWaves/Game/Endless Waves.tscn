@@ -3,16 +3,17 @@
 [ext_resource path="res://GameFile/EndlessWaves/Planets/Planet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GameFile/EndlessWaves/Game/Endless Waves.gd" type="Script" id=2]
 [ext_resource path="res://GameFile/GUI/Endless Wave Interface/main/Gui.tscn" type="PackedScene" id=3]
-[ext_resource path="res://GameFile/GUI/Endless Wave Interface/Magazin/Magazine_tscn/Dictionary_Weapons.gd" type="Script" id=10]
+[ext_resource path="res://GameFile/EndlessWaves/Dictionary_File/Dictionary_File.tscn" type="PackedScene" id=4]
 
 [node name="Endless Waves" type="Node2D"]
 pause_mode = 1
 script = ExtResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-script = ExtResource( 10 )
 
 [node name="Gui" parent="CanvasLayer" instance=ExtResource( 3 )]
 
 [node name="Planet" parent="." instance=ExtResource( 1 )]
-collision_mask = 1
+collision_mask = 8
+
+[node name="Dictionary_File" parent="." instance=ExtResource( 4 )]

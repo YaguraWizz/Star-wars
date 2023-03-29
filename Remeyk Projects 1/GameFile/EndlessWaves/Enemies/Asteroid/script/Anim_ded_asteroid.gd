@@ -5,4 +5,5 @@ func _ready():
 
 # warning-ignore:unused_argument
 func _on_AnimationPlayer_animation_finished(anim):
-	queue_free()
+	#queue_free()
+	show()

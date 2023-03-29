@@ -17,7 +17,7 @@ func _process(delta):
 func _on_Skaner_area_entered(area):
 	target_asteroids[area.spawn_id] = area
 	#print("Scanner_area Defender count ", get_tree().get_nodes_in_group("Defender").size())
-	#print("Detected targets: ", target_asteroids.keys())
+	#print("area.spawn_id: ", area.spawn_id)
 	
 	
 func clear_target_array(dead_asteroid,_strr:String):

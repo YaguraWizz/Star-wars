@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Node
 
 
 onready var _Dictionary_Weapons = {}
@@ -150,7 +150,7 @@ class Weapons_class:
 
 
 func _ready():
-	print("in ready of name "+ $".".get_name())
+	#print("in ready of name "+ $".".get_name())
 	Globals.Globals_Dictionary_Weapons=self
 	set_Dictionary_Weapons()
 	Info_Itom_defender()
@@ -168,7 +168,6 @@ func set_Dictionary_Weapons()->void:
 	_Dictionary_Weapons[8]=Weapons_class.new(9,'Mithril Defender',20.0,6.0,0.6,'Mithril',500,500,_Dictionary_Path['8'],_Dictionary_Bullet['8'],_Dictionary_Icon['8'],_Dictionary_Description['8'])
 	_Dictionary_Weapons[9]=Weapons_class.new(10,'Adamantium Defender',40.0,6.0,0.6,'Adamantium',700,700,_Dictionary_Path['9'],_Dictionary_Bullet['9'],_Dictionary_Icon['9'],_Dictionary_Description['9'])
 	_Dictionary_Weapons[10]=Weapons_class.new(11,'Orichalcum Defender',60.0,6.0,0.6,'Orichalcum',1000,1000,_Dictionary_Path['10'],_Dictionary_Bullet['10'],_Dictionary_Icon['10'],_Dictionary_Description['10'])
-
 
 
 func Info_Itom_defender():
