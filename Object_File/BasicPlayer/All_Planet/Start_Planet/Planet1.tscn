@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://BasicPlayer/BasicPlayer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://BasicPlayer/All_Planet/Start_Planet/Planet.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 323.002
+
+[node name="Planet1" instance=ExtResource( 1 )]
+rotation = 0.0
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource( 1 )
+
+[node name="Icon" parent="." index="1"]
+texture = ExtResource( 2 )
+
+[node name="ColorRect" parent="." index="3"]
+color = Color( 1, 1, 1, 1 )

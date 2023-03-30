@@ -1,7 +1,7 @@
 extends Node
 class_name WeaponElementPool
 export var Prefab:String
-export var AutoExpand:bool=false
+export var AutoExpand:bool=true
 export var pool:Dictionary={}
 
 

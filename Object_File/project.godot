@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Area2D",
+"class": "BasicPlanet",
+"language": "GDScript",
+"path": "res://BasicPlayer.gd"
+}, {
+"base": "Area2D",
 "class": "BasicWeapon",
 "language": "GDScript",
 "path": "res://Weapons/BasicWeapon.gd"
@@ -18,6 +23,11 @@ _global_script_classes=[ {
 "class": "BasicWeaponElement",
 "language": "GDScript",
 "path": "res://Weapons/Weapon_Element/BasicWeaponElement.gd"
+}, {
+"base": "Area2D",
+"class": "BassicEnemies",
+"language": "GDScript",
+"path": "res://BassicEnemies.gd"
 }, {
 "base": "Node",
 "class": "Info_The_Object",
@@ -30,8 +40,10 @@ _global_script_classes=[ {
 "path": "res://Weapons/WeaponElementPool.gd"
 } ]
 _global_script_class_icons={
+"BasicPlanet": "",
 "BasicWeapon": "",
 "BasicWeaponElement": "",
+"BassicEnemies": "",
 "Info_The_Object": "",
 "WeaponElementPool": ""
 }
@@ -39,7 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Object_File"
-run/main_scene="res://TheMainThing/The_main_thing.tscn"
+run/main_scene="res://World/World.tscn"
 config/icon="res://icon.png"
 
 [autoload]

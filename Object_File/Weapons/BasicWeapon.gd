@@ -4,6 +4,8 @@ class_name BasicWeapon
 export var is_it_an_active_object:bool=false
 export var whether_the_object_is_already_loaded:bool=false
 #-------------------------------------------------------------------------------
+enum NUM_PER_SHOT {ONE=1, TWO=2 }
+#-------------------------------------------------------------------------------
 export var _ID:int
 export var Icon:String
 export var Name:String 
@@ -153,79 +155,86 @@ func set_Number_Of_Rounds_Per_Shot(new_Number_Of_Rounds_Per_Shot:int)->void:
 #--------------------------------------------------------------
 
 
-
-
-#-------creating and launching Weapon_Elements----------------------------------
+#-------creating and launching Weapon_Elements----------------------------------~~~~~~~~~~~~~~~~~~~~TEMP~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func new_Weapon_Element():
-	WeaponElement.GetFreeElement()
 	Weapon_Element_Initialization(.get_global_mouse_position())
 	pass
 
+#-----------------------------------------------------------------------------------------------------------------------------
+func Weapon_Element_Initialization(pos_one=null,pos_two=null):
+	if pos_one!=null:
+		Number_Of_Rounds_Per_Shot=1
+		if pos_two!=null:
+			Number_Of_Rounds_Per_Shot=2
+	else:
+		print(" Error class BasicWeapon: Weapon_Element_Initialization: pos is null ")
+		return null
+	if !get_is_shooting_Legal():
+		print(" Error class BasicWeapon: Weapon_Element_Initialization: get_is_shooting_Legal() return is null ")
+		#return null
+		
+	var target_enemy = get_Enemie()
+	if target_enemy == null:
+		print("Error class BasicWeapon: Weapon_Element_Initialization: get_Enemie()  return is null")
+		#return null
+		
+	match Number_Of_Rounds_Per_Shot:
+		NUM_PER_SHOT.ONE:
+			var New_Weapon_Element_One = WeaponElement.GetFreeElement()
+			if New_Weapon_Element_One==null:
+				print("Error class BasicWeapon: Weapon_Element_Initialization: WeaponElement.GetFreeElement()  return is null")
+				return null
+			else:
+				#New_Weapon_Element_One.set_position(pos_one+Vector2(rand_range(-20,20),rand_range(-20,20)))
+				#New_Weapon_Element_One.set_position(pos_one.global_position)$Position2D
+				New_Weapon_Element_One.set_position($Position2D.global_position)
+				look_at(get_global_mouse_position())
+				Set_New_Weapon_Element_Parameters(New_Weapon_Element_One,.get_global_mouse_position())
+				#Set_New_Weapon_Element_Parameters(New_Weapon_Element_One,target_enemy)
+				if New_Weapon_Element_One.get_parent()==null:
+					get_node("MyPool").add_child(New_Weapon_Element_One) 
+				New_Weapon_Element_One._Birth_process()
+				
+		NUM_PER_SHOT.TWO:
+			var New_Weapon_Element_One = WeaponElement.GetFreeElement()
+			var New_Weapon_Element_Two = WeaponElement.GetFreeElement()
+			
+			if New_Weapon_Element_One==null or New_Weapon_Element_Two==null:
+				print("Error class BasicWeapon: Weapon_Element_Initialization: WeaponElement.GetFreeElement()  return is null")
+				return null
+			else:
+				Set_New_Weapon_Element_Parameters(New_Weapon_Element_One,target_enemy)
+				Set_New_Weapon_Element_Parameters(New_Weapon_Element_Two,target_enemy)
+				
+				New_Weapon_Element_One.set_position(pos_one.global_position)
+				New_Weapon_Element_Two.set_position(pos_two.global_position)
+				
+				#New_Weapon_Element_One.set_position(pos_one.global_position)
+				if New_Weapon_Element_One.get_parent()==null:
+					get_node("MyPool").add_child(New_Weapon_Element_One) 
+				if New_Weapon_Element_One.get_parent()==null:
+					get_node("MyPool").add_child(New_Weapon_Element_One) 
+				
+				New_Weapon_Element_One._Birth_process()
+				New_Weapon_Element_One._Birth_process()
+				
+		_: 
+			print(" Error class BasicWeapon: Weapon_Element_Initialization: match Number_Of_Rounds_Per_Shot is call default ")
+			return null
+#------------------------------------------------------------------------------------------------------------------------------
 
+func Set_New_Weapon_Element_Parameters(NEW_WEAPON_ELEMENT:Object,TARGET_ENEMY)->void:
+	NEW_WEAPON_ELEMENT.set_Damage(get_Damage())
+	NEW_WEAPON_ELEMENT.set_Speed(get_Speed())
+	NEW_WEAPON_ELEMENT.set_Direction(TARGET_ENEMY)
+	#NEW_WEAPON_ELEMENT.set_Direction(intercept_point(TARGET_ENEMY))
+	pass
+	
 #calculation of the point of intersection of the trajectories of an asteroid and a bullet (approximate)
 func intercept_point(ca) -> Vector2: #вычисление точки пересечения траекторий астероида и пули (примерное)
 	return ca.target_center_return() + Vector2(global_position.distance_to(ca.target_center_return())/2/get_Speed()*ca.get_Speed(),
 		0).rotated(ca.rotation)
-#------------------------------------------
-#
-func Weapon_Element_Initialization(pos1=null,pos2=null):
-	var target_enemy = get_Enemie()
-	if target_enemy == null and get_is_shooting_Legal()==null:
-		print("Error class BasicWeapon: Weapon_Element_Initialization ")
-		#return
-	if pos1!=null and pos2==null:
-		var new_Weapon_Element1 = WeaponElement.GetFreeElement()
-		if new_Weapon_Element1==null:return
-		new_Weapon_Element1.position = pos1+Vector2(rand_range(-20,20),rand_range(-20,20))
-		if new_Weapon_Element1._get_whether_the_object_is_already_loaded():
-			print("new_Weapon_Element1._get_whether_the_object_is_already_loaded() true")
-			add_child(new_Weapon_Element1) 
-			new_Weapon_Element1._set_whether_the_object_is_already_loaded(true)
-			
-		#new_Weapon_Element1.set_damage(get_Damage())
-		new_Weapon_Element1._Birth_process()
-		
-		#new_Weapon_Element1.set_Speed(get_Speed())
-		#new_Weapon_Element1.set_Direction(intercept_point(target_enemy))
-
-		
-	elif pos1!=null and pos2!=null:
-
-		var new_Weapon_Element1 = WeaponElement.GetFreeElement()
-		var new_Weapon_Element2 = WeaponElement.GetFreeElement()
-
-		new_Weapon_Element1.position = pos1.global_position
-		new_Weapon_Element2.position = pos2.global_position
-
-		new_Weapon_Element1.set_damage(get_Damage())
-		new_Weapon_Element2.set_damage(get_Damage())
-
-		new_Weapon_Element1.set_Direction(intercept_point(target_enemy))
-		new_Weapon_Element2.set_Direction(intercept_point(target_enemy))
-
-		new_Weapon_Element1.set_Speed(get_Speed())
-		new_Weapon_Element2.set_Speed(get_Speed())
-		
-		if !new_Weapon_Element1._get_whether_the_object_is_already_loaded():
-			.add_child(new_Weapon_Element1) 
-			#new_Weapon_Element1._set_whether_the_object_is_already_loaded(true)
-		
-		new_Weapon_Element1._Birth_process()
-		
-		if !new_Weapon_Element2._get_whether_the_object_is_already_loaded():
-			.add_child(new_Weapon_Element2) 
-			#new_Weapon_Element2._set_whether_the_object_is_already_loaded(true)
-
-		new_Weapon_Element1._Birth_process()
-
-	else:
-		print("Error new Weapon_Element")
-#------------------------------------------
-
-
-
-
-
+	
 
 #--------------------------------------------------------------
 #--------------------------------------------------------------
@@ -319,15 +328,12 @@ func get_Path_Icon_is_valid()->bool:
 
 #--------------------------------------------------
 
-
 #-------------------------------------------------------------------------------
 func _on_Is_colliding_Planet_area(_area, _is_colliding):
 	_set_is_colliding_Planet(_is_colliding)
 func _on_Is_colliding_Weapons_area(_area, _is_colliding):
 	_set_is_colliding_Weapons(_is_colliding)
 #-------------------------------------------------------------------------------
-
-
 
 func _on_BasicWeapon_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.is_pressed():

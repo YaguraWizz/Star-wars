@@ -6,7 +6,7 @@ export var _ID:int
 export var TimeLive:int=3
 #-------------------------------------------------------------------------------
 export var is_it_an_active_object:bool=false
-export var whether_the_object_is_already_loaded:bool=false
+#export var whether_the_object_is_already_loaded:bool=false
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -25,16 +25,15 @@ func _set_is_it_an_active_object(the_new_activity_state_of_the_object:bool)->voi
 	is_it_an_active_object=the_new_activity_state_of_the_object
 func _get_is_it_an_active_object()->bool:
 	return is_it_an_active_object
-func _set_whether_the_object_is_already_loaded(the_new_activity_state_of_the_object:bool)->void:
-	print("old ",is_it_an_active_object," b ",the_new_activity_state_of_the_object)
-	is_it_an_active_object=the_new_activity_state_of_the_object
-func _get_whether_the_object_is_already_loaded()->bool:
-	return is_it_an_active_object
+#func _set_whether_the_object_is_already_loaded(the_new_activity_state_of_the_object:bool)->void:
+#	print("old ",is_it_an_active_object," b ",the_new_activity_state_of_the_object)
+#	is_it_an_active_object=the_new_activity_state_of_the_object
+#func _get_whether_the_object_is_already_loaded()->bool:
+#	return is_it_an_active_object
 #-------------------------------------------------------------------------------
 func _ready():
 	print("\n\nin ready of name "+ $".".get_name())
 
-	
 #-------------------------------------------------------------------------------
 func _Birth_process():
 	show()
@@ -45,21 +44,17 @@ func _Birth_process():
 	pass
 #-------------------------------------------------------------------------------
 
-
-
-
 #-------------------------------------------------------------------------------
-func _Life_process():
+func _process(delta):
+	if _get_is_it_an_active_object():
+		global_position += Direction*delta
 	pass
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
 func _Death_process():
 	hide()
-	print("\nold ",_get_is_it_an_active_object())
 	_set_is_it_an_active_object(false)
-	_get_is_it_an_active_object()
-	print("new ",_get_is_it_an_active_object(),"\n")
 	pass
 #-------------------------------------------------------------------------------
 
@@ -93,7 +88,6 @@ func set_Speed(new_Speed:float)->void:
 
 #--------------------------------------------------
 func _on_BasicWeaponElement_area(_area):
-	print("_on_BasicWeaponElement_area ")
 	_Death_process()
 	pass # Replace with function body.
 #--------------------------------------------------
@@ -104,14 +98,8 @@ func _on_Timer_timeout():
 	timer.stop()
 	_Death_process()
 	pass # Replace with function body.
-#--------------------------------------------------
-
-
-
-
-
+#-------------------------------------------------
 func _on_BasicWeaponElement_ready():
 	print(" I'm ready")
-	
-	
+	#_set_whether_the_object_is_already_loaded(true)
 	pass # Replace with function body.

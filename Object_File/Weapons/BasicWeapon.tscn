@@ -1,24 +1,23 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Weapons/BasicWeapon.gd" type="Script" id=1]
+[ext_resource path="res://Weapons/Alll_Weapon/Gun_Weapon/img/пушка.png" type="Texture" id=2]
+[ext_resource path="res://Weapons/Alll_Weapon/Gun_Weapon/img/Установочный блок.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 100, 100 )
+extents = Vector2( 1000, 1000 )
 
 [sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 1, 1 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 100, 100 )
+extents = Vector2( 20, 30 )
 
 [node name="BasicWeapon" type="Area2D"]
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
-
-[node name="Sprite" type="Sprite" parent="."]
-
-[node name="Sprite2" type="Sprite" parent="."]
 
 [node name="Is_colliding" type="Node2D" parent="."]
 
@@ -40,6 +39,19 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 40, 40 )
 rect_pivot_offset = Vector2( 20, 20 )
 color = Color( 0.85098, 0.278431, 0.278431, 1 )
+
+[node name="MyPool" type="Node" parent="."]
+
+[node name="Tower" type="Sprite" parent="."]
+rotation = 1.5708
+scale = Vector2( 0.6, 0.7 )
+texture = ExtResource( 3 )
+
+[node name="Body" type="Sprite" parent="."]
+position = Vector2( 8, 0 )
+rotation = 1.5708
+scale = Vector2( 0.64, 0.64 )
+texture = ExtResource( 2 )
 
 [connection signal="input_event" from="." to="." method="_on_BasicWeapon_input_event"]
 [connection signal="area_entered" from="Is_colliding/Is_colliding_Planet" to="." method="_on_Is_colliding_Planet_area" binds= [ true ]]

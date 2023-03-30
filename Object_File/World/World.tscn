@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://BasicPlayer/All_Planet/Start_Planet/Planet1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Weapons/Alll_Weapon/Gun_Weapon/Gun_Weapon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Weapons/BasicWeapon.gd" type="Script" id=3]
+
+[node name="World" type="Node2D"]
+
+[node name="Planet1" parent="." instance=ExtResource( 1 )]
+rotation = 2.59123
+
+[node name="Gun_Weapon" parent="Planet1" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 2, 2 )
