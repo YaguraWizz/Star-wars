@@ -106,7 +106,7 @@ func get_Asteroid_global_position()->Vector2:
 
 #------number of shots fired at an asteroid--------------------------
 func set_number_of_shots(_Asteroid) -> void:
-	Number_of_shots=stepify(_Asteroid.get_HP_Enemies()/get_Damage()*2,1)
+	Number_of_shots=stepify(_Asteroid.get_HP_Enemies()/get_Damage()*2+100,1)
 func get_number_of_shots()->int:
 	return Number_of_shots
 func change_number_of_shots(number:int=2)->void:
@@ -166,7 +166,7 @@ func new_Bullet(pos1=null,pos2=null) -> void:
 
 #calculation of the point of intersection of the trajectories of an asteroid and a bullet (approximate)
 func intercept_point(ca) -> Vector2: #вычисление точки пересечения траекторий астероида и пули (примерное)
-	return ca.global_position + Vector2(global_position.distance_to(ca.global_position)/2/get_Speed()*ca.get_Speed(),
+	return ca.target_center_return() + Vector2(global_position.distance_to(ca.target_center_return())/2/get_Speed()*ca.get_Speed(),
 		0).rotated(ca.rotation)
 #------------------------------------------
 

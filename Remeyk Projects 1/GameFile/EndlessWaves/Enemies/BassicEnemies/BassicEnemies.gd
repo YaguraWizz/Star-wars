@@ -1,5 +1,7 @@
 extends Area2D
 class_name BassicEnemies
+
+
 #--------Object Fields----------------------------------------------------------
 export var Icon:Texture 
 export var Name:String 
@@ -10,6 +12,10 @@ export var Metal:int
 export var HP_Enemies:int 
 #-------------------------------------------------------------------------------
 onready var head_position = $Position
+onready var collision_shape_2d = $CollisionShape2D
+onready var enemies = $Enemies
+onready var explosion = $Explosion
+onready var animation_player = $AnimationPlayer
 
 #-------------------------------------------------------------------------------
 onready var AnimDedAsteroid:= preload("res://GameFile/EndlessWaves/Enemies/Asteroid/Anim_ded_asteroid.tscn")
@@ -17,35 +23,41 @@ onready var AnimDedAsteroid:= preload("res://GameFile/EndlessWaves/Enemies/Aster
 
 
 #--------Technical Fields-------------------------------------------------------
-export var Initial_State:bool=false setget set_Initial_State,get_Initial_State
 export var spawn_id:int = 0
 export var is_it_visible:bool=false
 export var is_the_scene_loaded:bool=false
+var is_dead:bool=false
 #-------------------------------------------------------------------------------
 
 #--------Object Physics---------------------------------------------------------
-enum Movement_Type {TO_THE_PLANET=0,MAIN_SCREENSAVER=1}
 var velocity:Vector2
-var is_dead:bool=false
-var state=Movement_Type.TO_THE_PLANET
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
-func _set_is_dead_Enemies(_is_dead_Enemies:bool)->void:
-	is_dead=_is_dead_Enemies
-func _get_is_dead_Enemies()->bool:
-	return is_dead
-
+#--------------------------------------------------отвечают за pool 
+func setActive(stat:bool)->void:
+	is_it_visible=stat
+func getActive()->bool:
+	return is_it_visible
+#--------------------------------------------------отвечают за то что был ли объект уже добавлен или это новый
 func _set_is_the_scene_loaded(_is_the_scene_loaded:bool)->void:
 	is_the_scene_loaded=_is_the_scene_loaded
 func _get_is_the_scene_loaded()->bool:
 	return is_the_scene_loaded
-	return is_the_scene_loaded
-	
-	
-func _ready():
+#--------------------------------------------------отвечают за жизнь объекта
+func _set_is_dead_Enemies(_is_dead_Enemies:bool)->void:
+	is_dead=_is_dead_Enemies
+func _get_is_dead_Enemies()->bool:
+	return is_dead
+#--------------------------------------------------
+func _Object_State(Object_State:bool=true)->void:
+	#enemies.set_visible(Object_State)
+	#explosion.set_visible(Object_State)
 	pass
-
+#--------------------------------------------------
+func _physics_process(_delta):
+	Moving_Enemies()
+#--------------------------------------------------
 
 #--------------------------------------------------
 func set_Name(_Name:String)->void:
@@ -60,7 +72,8 @@ func set_Damag(_Damag:float)->void:
 func get_Damag()->float:
 	return Damag
 func take_damage(_damage)->void:
-	set_HP_Enemies(get_HP_Enemies()-_damage)
+	if get_HP_Enemies()>0 and !is_dead:
+		set_HP_Enemies(get_HP_Enemies()-_damage)
 func slowdown(_slowdown:float)->void:
 	if get_HP_Enemies()>0 and !is_dead:
 		set_Speed(_slowdown)
@@ -95,31 +108,23 @@ func get_Metal()->int:
 #--------------------------------------------------
 
 #--------------------------------------------------
-func set_HP_Enemies(_HP_Enemies:int=10)->void:
+func set_HP_Enemies(_HP_Enemies:int=0)->void:
 	HP_Enemies=_HP_Enemies
-	if HP_Enemies<=0:
-		is_dead=true
+	if HP_Enemies<=0 and _HP_Enemies!=0 :
+		
+		_set_is_dead_Enemies(true)
 		Animation_Asteroid_is_dead()
-		Behavior_After_Death()
 func get_HP_Enemies()->int:
 	return HP_Enemies
-#--------------------------------------------------
-
-#--------------------------------------------------
-func set_Initial_State(_Initial_State:bool)->void:
-	Initial_State=_Initial_State
-func get_Initial_State()->bool:
-	return Initial_State
 #--------------------------------------------------
 
 
 #-----Weapon Damage--------------------------------
 func _on_BassicEnemies_area_entered(area):
 	if area.is_in_group("PLANET") and !is_dead:
-		Globals.Skaner.clear_target_array(self,"planet")
 		area.take_damage(get_Damag())
 		_set_is_dead_Enemies(true)
-		#queue_free()
+		Animation_Asteroid_is_dead()
 	pass # Replace with function body.
 #--------------------------------------------------
 
@@ -128,54 +133,38 @@ func _on_BassicEnemies_body_entered(_body):
 	if get_HP_Enemies()<=0 or !is_dead:return
 	pass # Replace with function body.
 #--------------------------------------------------
-#--------------------------------------------------
 
+
+#--------------------------------------------------
 func Animation_Asteroid_is_dead()->void:
-	if AnimDedAsteroid!=null:
+	Globals.Skaner.clear_target_array(self,"planet")
+	_Object_State(false)
+	animation_player.play("Explosion")
+	get_tree().call_group("Bar","update_Metal",Gold)
+	get_tree().call_group("Bar","update_gold",Metal)
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name=="Explosion":
 		hide()
-		Globals.Skaner.clear_target_array(self,"Weapons")
-		var DedAsteroid=AnimDedAsteroid.instance() 
-		DedAsteroid.position=global_position
-		get_tree().get_root().add_child(DedAsteroid) 
+		setActive(false)
+#--------------------------------------------------
 
 #--------------------------------------------------
-#--------------------------------------------------
-func Behavior_After_Death()->void:
+func Moving_Enemies()->void:
+	if _get_is_dead_Enemies():return
+	look_at(Globals.Planets.global_position)
+	velocity = global_position.direction_to(Globals.Planets.global_position) * get_Speed()
+	translate(velocity)
 	pass
 #--------------------------------------------------
 
-#-------------------------------------------------------------------------------
-func change_Movement_Type(new_state)->void:
-	state=new_state
-#-------------------------------------------------------------------------------
-
 #--------------------------------------------------
-func _physics_process(_delta):
-	Moving_Enemies()
-	
-#--------------------------------------------------
-func setActive(stat:bool)->void:
-	is_it_visible=stat
-func getActive()->bool:
-	return is_it_visible
-#--------------------------------------------------
-func Moving_Enemies()->void:
-	if _get_is_dead_Enemies():
-		print("_get_is_dead_Enemies() ",_get_is_dead_Enemies())
-		return
-	match state:
-		Movement_Type.TO_THE_PLANET:
-			look_at(Globals.Planets.global_position)
-			velocity = global_position.direction_to(Globals.Planets.global_position) * get_Speed()
-			translate(velocity)
-		Movement_Type.MAIN_SCREENSAVER:
-			pass
-#--------------------------------------------------
-
-
-
 func target_center_return()->Vector2:
 	return head_position.global_position
+#--------------------------------------------------
 
-
-
+func up_date_live()->void:
+	show()
+	set_HP_Enemies(40)
+	_set_is_dead_Enemies(false)
+	print("\nold_get_HP_Enemies() ",HP_Enemies)
+	print("new_get_HP_Enemies(40) ",HP_Enemies)

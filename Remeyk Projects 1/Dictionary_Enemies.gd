@@ -9,14 +9,14 @@ var Pool
 var cols=0
 func _ready():
 	print("in ready of name "+ $".".get_name())
-	Pool=Class_Pool.new(Path_,40)
+	Pool=Class_Pool.new(Path_,3)
 	randomize()
-	nev_spawn_asteroids(10)
+	nev_spawn_asteroids(3)
 
 func _physics_process(delta):
 	cols+=delta
-	if cols>=15:
-		nev_spawn_asteroids(30)
+	if cols>=6:
+		nev_spawn_asteroids(3)
 		cols=0
 	pass
 
@@ -30,11 +30,13 @@ func nev_spawn_asteroids(num):
 			1:temp=Vector2(rand_range(-1000,1000), rand_range(1000,800))
 			2:temp=Vector2(rand_range(-1000,-800), rand_range(-1000,1000))
 			3:temp=Vector2(rand_range(1000,800), rand_range(-1000,1000))
-		print("\nis null asteroid? ",new_asteriod," ",new_asteriod==null)
 		new_asteriod.set_position(temp)
 		if !new_asteriod._get_is_the_scene_loaded():
 			new_asteriod._set_is_the_scene_loaded(true)
 			add_child(new_asteriod) 
+		else:
+			new_asteriod.up_date_live()
+			
 		num -= 1
 	pass
 

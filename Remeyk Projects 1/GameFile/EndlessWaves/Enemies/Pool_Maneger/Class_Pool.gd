@@ -24,7 +24,7 @@ func CreateObject(isActiveByDefault:bool=false,ID:int=0)->BassicEnemies:
 	_CreateObject.setActive(isActiveByDefault) #Выключаем видимость
 	pool[ID]=_CreateObject  #добавляем в словарь
 	_CreateObject.spawn_id=ID
-	print("\npool[ID] ",pool[ID]," _CreateObject.spawn_id ",_CreateObject.spawn_id," ID ",ID)
+	#print("\npool[ID] ",pool[ID]," _CreateObject.spawn_id ",_CreateObject.spawn_id," ID ",ID)
 	return _CreateObject
 	
 func HasFreeElement(): #функция по возврату скрытого объекта 
@@ -38,9 +38,11 @@ func HasFreeElement(): #функция по возврату скрытого о
 func GetFreeElement():
 	var element=HasFreeElement()
 	if element!=null:
-		print("\nthere are free loop ",element)
+		#print("\nthere are free loop ",element)
+		Events.emit_signal("_size_pool",("free obj pool size "+str(pool.size())))
 		return element
 	if AutoExpand:
 		var temp=CreateObject(true,pool.size())
-		print("\nnew obj loop ",temp)
+		#print("\nnew obj loop ",temp)
+		Events.emit_signal("_size_pool",("new obj pool size "+str(pool.size())))
 		return temp #если все скрытые заняты создаем новый

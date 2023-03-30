@@ -59,7 +59,7 @@ func queue_free_bullit():
 #-----------------------------------------------------
 
 func _on_Bullet_area_entered(area):
-	if area._get_is_dead_Enemies():
+	if !area._get_is_dead_Enemies():
 		area.take_damage(damage)
 		queue_free_bullit()
 func _on_VisibilityNotifier2D_screen_exited():
