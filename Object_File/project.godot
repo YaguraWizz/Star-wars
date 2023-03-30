@@ -1,0 +1,68 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Area2D",
+"class": "BasicWeapon",
+"language": "GDScript",
+"path": "res://Weapons/BasicWeapon.gd"
+}, {
+"base": "Area2D",
+"class": "BasicWeaponElement",
+"language": "GDScript",
+"path": "res://Weapons/Weapon_Element/BasicWeaponElement.gd"
+}, {
+"base": "Node",
+"class": "Info_The_Object",
+"language": "GDScript",
+"path": "res://Info_The_Object.gd"
+}, {
+"base": "Node",
+"class": "WeaponElementPool",
+"language": "GDScript",
+"path": "res://Weapons/WeaponElementPool.gd"
+} ]
+_global_script_class_icons={
+"BasicWeapon": "",
+"BasicWeaponElement": "",
+"Info_The_Object": "",
+"WeaponElementPool": ""
+}
+
+[application]
+
+config/name="Object_File"
+run/main_scene="res://TheMainThing/The_main_thing.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+Events="*res://Events.gd"
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[layer_names]
+
+2d_physics/layer_1="Worl"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Weapon"
+2d_physics/layer_4="Enemies"
+2d_physics/layer_5="Weapon_Element"
+2d_physics/layer_6="Intrusion_Detection_System"
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
