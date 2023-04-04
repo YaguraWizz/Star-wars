@@ -1,0 +1,115 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Line2D",
+"class": "AntialiasedLine2D",
+"language": "GDScript",
+"path": "res://addons/antialiased_line2d/antialiased_line2d.gd"
+}, {
+"base": "Polygon2D",
+"class": "AntialiasedPolygon2D",
+"language": "GDScript",
+"path": "res://addons/antialiased_line2d/antialiased_polygon2d.gd"
+}, {
+"base": "Polygon2D",
+"class": "AntialiasedRegularPolygon2D",
+"language": "GDScript",
+"path": "res://addons/antialiased_line2d/antialiased_regular_polygon2d.gd"
+}, {
+"base": "BasicEnemies",
+"class": "BasicAsteroids",
+"language": "GDScript",
+"path": "res://MainFacilities/Enemies/AsteroidsAndComets/BasicAsteroids/BasicAsteroids.gd"
+}, {
+"base": "Area2D",
+"class": "BasicBullet",
+"language": "GDScript",
+"path": "res://MainFacilities/Defenders/GroundForce/GroundGuns/BasicBullet/BasicBullet.gd"
+}, {
+"base": "Area2D",
+"class": "BasicDefenders",
+"language": "GDScript",
+"path": "res://MainFacilities/Defenders/BasicDefenders.gd"
+}, {
+"base": "Area2D",
+"class": "BasicEnemies",
+"language": "GDScript",
+"path": "res://MainFacilities/Enemies/BasicEnemies.gd"
+}, {
+"base": "BasicDefenders",
+"class": "BasicGroundWeapons",
+"language": "GDScript",
+"path": "res://MainFacilities/Defenders/GroundForce/GroundGuns/BasicDefenders/BasicGroundGuns.gd"
+}, {
+"base": "Area2D",
+"class": "BasicPlanets",
+"language": "GDScript",
+"path": "res://MainFacilities/Planets/BasicPlanet/BasicPlanets.gd"
+}, {
+"base": "Node",
+"class": "BassicPool",
+"language": "GDScript",
+"path": "res://MainFacilities/Defenders/IntrusionDetectionSystem/BassicPool.gd"
+}, {
+"base": "BasicDefenders",
+"class": "IntrusionDetectionSystem",
+"language": "GDScript",
+"path": "res://MainFacilities/Defenders/IntrusionDetectionSystem/IDS.gd"
+} ]
+_global_script_class_icons={
+"AntialiasedLine2D": "res://addons/antialiased_line2d/antialiased_line2d.svg",
+"AntialiasedPolygon2D": "res://addons/antialiased_line2d/antialiased_polygon2d.svg",
+"AntialiasedRegularPolygon2D": "res://addons/antialiased_line2d/antialiased_regular_polygon2d.svg",
+"BasicAsteroids": "",
+"BasicBullet": "",
+"BasicDefenders": "",
+"BasicEnemies": "",
+"BasicGroundWeapons": "",
+"BasicPlanets": "",
+"BassicPool": "",
+"IntrusionDetectionSystem": ""
+}
+
+[application]
+
+config/name="Temp"
+run/main_scene="res://MainFacilities/World/World.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+AntialiasedLine2DTexture="*res://addons/antialiased_line2d/texture.gd"
+Global="*res://MainFacilities/World/Globals/Global.gd"
+Events="*res://MainFacilities/World/Events/Events.gd"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/antialiased_line2d/plugin.cfg" )
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Planet"
+2d_physics/layer_3="Defender"
+2d_physics/layer_4="Enemis"
+2d_physics/layer_5="IDS"
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Images/Enemies/Asteroids/AmberAsteroids.png" type="Texture" id=1]
+[ext_resource path="res://MainFacilities/Enemies/AsteroidsAndComets/BasicAsteroids/BasicAsteroids.tscn" type="PackedScene" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 5.0
+height = 54.0
+
+[node name="AmberAsteroids" instance=ExtResource( 2 )]
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( -30, 0 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="AsteroidIcon" parent="." index="1"]
+visible = true
+position = Vector2( -39, 0 )
+texture = ExtResource( 1 )
+hframes = 66
+
+[node name="ExplosionIcon" parent="." index="5"]
+visible = false

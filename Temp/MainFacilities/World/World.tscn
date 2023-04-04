@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://MainFacilities/Planets/GameOnThePlanet/FirePlanet/FirePlanet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://MainFacilities/Enemies/EnemyManager.gd" type="Script" id=3]
+
+[node name="World" type="Node2D"]
+
+[node name="FirePlanet" parent="." instance=ExtResource( 1 )]
+position = Vector2( 518, 309 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="EnemyManager" type="Node2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 518, 307 )
+current = true
+zoom = Vector2( 2, 2 )

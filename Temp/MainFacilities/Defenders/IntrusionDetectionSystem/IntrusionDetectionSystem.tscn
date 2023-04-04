@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://MainFacilities/Defenders/IntrusionDetectionSystem/IDS.gd" type="Script" id=1]
+[ext_resource path="res://Images/Defenders/GroundGuns/defolt/радар.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 600.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 45, 45 )
+
+[node name="IntrusionDetectionSystem" type="Area2D"]
+collision_layer = 16
+collision_mask = 8
+script = ExtResource( 1 )
+Icon = "res://Images/Defenders/GroundGuns/defolt/радар.png"
+Speed = 0.5
+Gold = 10
+Metal = 10
+Radius = 600.0
+max_radius = 700.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Icon" type="Sprite" parent="."]
+scale = Vector2( 0.48, 0.48 )
+texture = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[connection signal="area_entered" from="." to="." method="_on_IDS_area_entered"]
