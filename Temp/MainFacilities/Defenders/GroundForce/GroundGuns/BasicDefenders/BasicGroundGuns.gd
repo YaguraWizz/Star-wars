@@ -34,11 +34,13 @@ func _ready():
 	add_to_group("BasicGroundWeapons")
 	set_Damage_per_second()
 	set_Dictionary_Of_GlobalNodePositions()
+	set_pool()
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #ВАЖНО ПОЭТОМУ СВЕРХУ
 func set_pool()->void:
 	var tempPool=Global.PLANET.get_IDS().get_pool()
+	print(tempPool.GetFreeElement().get_name())
 	if tempPool!=null:
 		PoolWeaponElement=tempPool
 	else:
@@ -88,6 +90,14 @@ func _is_There_Permission_ToInstall()->bool:
 	else:
 		return false
 func _doYouHave_Permission_ToShoot() -> bool:
+#	print("-----------------------")
+#	print("!_get_is_dragMouse() ",!_get_is_dragMouse())
+#	print("_get_is_colliding_Planet() ",_get_is_colliding_Planet())
+#	print("!_get_is_colliding_Weapons() ",!_get_is_colliding_Weapons())
+#	print("get_is_shooting_Legal() ",get_is_shooting_Legal())
+#	print("get_Enemie() ",get_Enemie())
+#	#print("_doYouHave_Permission_ToShoot()",!_get_is_dragMouse() and _get_is_colliding_Planet() and !_get_is_colliding_Weapons() and get_is_shooting_Legal() and get_Enemie() != null)
+#	print("-----------------------")
 	if !_get_is_dragMouse() and _get_is_colliding_Planet() and !_get_is_colliding_Weapons() and get_is_shooting_Legal() and get_Enemie() != null:
 		return true
 	else:
@@ -141,8 +151,34 @@ func _StartingWeaponSetup(_Object):
 	#Slowdown=_Object.get_Slowdown()
 	#СДЕЛАТЬ ФУНКИЮ ПО ПЕРЕДАЧИ ТИПА ПУЛЬ 
 #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func _physics_process(delta):
+	_Fire_on_the_Enemy(delta)
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+func _Fire_on_the_Enemy(delta)->void:
+	if _doYouHave_Permission_ToShoot():
+		time_change(delta)
+		if get_Timer()>get_Cooldown() and get_number_of_shots()>0:
+			print("level2")
+			look_at(get_Enemie_global_position())
+			Weapon_Element_Initialization()
+			change_number_of_shots(get_Dictionary_Of_GlobalNodePositions().size())
+			set_Timer(0)
+#-------------------------------------------------------------------------------
 
-#--------------------otaki-logic------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
 #----------------receive,-return-Enemie-----------------------------------------
 func set_Enemie(targetEnemie:Object) -> void:
 	if targetEnemie==null || !is_instance_valid(targetEnemie):
@@ -160,7 +196,7 @@ func get_Enemie()->Object:
 func get_Enemie_id()-> int:
 	if !is_instance_valid(Enemie):
 		return -1
-	return Enemie.spawn_id		
+	return Enemie.get_ID()		
 func get_Enemie_global_position()->Vector2:
 	if get_Enemie() != null:
 		return get_Enemie().global_position
@@ -172,7 +208,7 @@ func get_Enemie_global_position()->Vector2:
 
 #----------number of shots fired at an Enemie-----------------------------------
 func set_number_of_shots(_Enemie) -> void:
-	Number_of_shots=stepify((_Enemie.get_HP_Enemies() * (3/(.get_Number_Of_Rounds_Per_Shot()*.get_Damage()))),1) as int
+	Number_of_shots=stepify((_Enemie.get_EnemiesHP() * (3/(get_Number_Of_Rounds_Per_Shot()*get_Damage()))),1) as int
 func get_number_of_shots()->int:
 	return Number_of_shots
 func change_number_of_shots(number:int=2)->void:
@@ -201,16 +237,12 @@ func Weapon_Element_Initialization():
 	if get_Dictionary_Of_GlobalNodePositions()[0]==null:
 		print(" Error class BasicWeapon: .Weapon_Element_Initialization: pos is null ")
 		return null
-	if !get_is_shooting_Legal():
-		print(" Error class BasicWeapon: .Weapon_Element_Initialization: get_is_shooting_Legal() return is null ")
-		return null
-		pass
 	var target_enemy = get_Enemie()
 	if target_enemy == null:
 		print("Error class BasicWeapon: .Weapon_Element_Initialization: get_Enemie()  return is null")
 		return null
 
-	match get_Dictionary_Of_GlobalNodePositions():
+	match get_Dictionary_Of_GlobalNodePositions().size():
 		NUM_PER_SHOT.ONE:
 			var New_Weapon_Element_One = PoolWeaponElement.GetFreeElement()
 			if New_Weapon_Element_One==null:
@@ -220,10 +252,10 @@ func Weapon_Element_Initialization():
 				New_Weapon_Element_One.set_position(get_Dictionary_Of_GlobalNodePositions()[0].global_position)
 				New_Weapon_Element_One.set_position(global_position)
 				look_at(get_global_mouse_position())
-				Set_New_Weapon_Element_Parameters(New_Weapon_Element_One,.get_global_mouse_position())
-				#Set_New_Weapon_Element_Parameters(New_Weapon_Element_One,target_enemy)
+				#Set_New_Weapon_Element_Parameters(New_Weapon_Element_One,.get_global_mouse_position())
+				Set_New_Weapon_Element_Parameters(New_Weapon_Element_One,target_enemy)
 				if New_Weapon_Element_One.get_parent()==null:
-					get_node("MyPool").add_child(New_Weapon_Element_One) 
+					get_tree().get_node("MyPool").add_child(New_Weapon_Element_One) 
 				New_Weapon_Element_One._Birth_process()
 
 		NUM_PER_SHOT.TWO:
@@ -255,23 +287,25 @@ func Weapon_Element_Initialization():
 #------------------------------------------------------------------------------------------------------------------------------
 
 func Set_New_Weapon_Element_Parameters(NEW_WEAPON_ELEMENT:Object,TARGET_ENEMY)->void:
-	NEW_WEAPON_ELEMENT.set_Damage(.get_Damage())
+	NEW_WEAPON_ELEMENT.set_Damag(get_Damage())
 	NEW_WEAPON_ELEMENT.set_Speed(.get_Speed())
-	NEW_WEAPON_ELEMENT.set_Direction(TARGET_ENEMY)
-	#NEW_WEAPON_ELEMENT.set_Direction(intercept_point(TARGET_ENEMY))
+	NEW_WEAPON_ELEMENT.set_Destination(intercept_point(TARGET_ENEMY))
+	#NEW_WEAPON_ELEMENT.set_Destination(TARGET_ENEMY)
 	pass
 	
 #calculation of the point of intersection of the trajectories of an asteroid and a bullet (approximate)
 func intercept_point(ca) -> Vector2: #вычисление точки пересечения траекторий астероида и пули (примерное)
-	return ca.target_center_return() + Vector2(global_position.distance_to(ca.target_center_return())/2/get_Speed()*ca.get_Speed(),
+	return ca.global_position + Vector2(global_position.distance_to(ca.global_position)/2/get_Speed()*ca.get_Speed(),
 		0).rotated(ca.rotation)
 
 
 #-------------------------------------------------------------------------------
 func _on_Is_colliding_Planet_area(_area, _is_colliding):
-	_set_is_colliding_Planet(_is_colliding)
+	if _area.is_in_group("PLANET"):
+		_set_is_colliding_Planet(_is_colliding)
 func _on_Is_colliding_Weapons_area(_area, _is_colliding):
-	_set_is_colliding_Weapons(_is_colliding)
+	if _area.is_in_group("BasicGroundWeapons"):
+		_set_is_colliding_Weapons(_is_colliding)
 #-------------------------------------------------------------------------------
 
 func _on_BasicWeapon_input_event(_viewport, event, _shape_idx):

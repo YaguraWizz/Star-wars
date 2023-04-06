@@ -7,17 +7,17 @@ export var pool:Dictionary={}
 
 func _init(_Prefab:String="",count:int=0):
 	if !_Prefab.is_abs_path():
-		#print("Error class WeaponElementPool: _Path_Weapon_Element is not a path")
+		print("Error class WeaponElementPool: _Path_Weapon_Element is not a path")
 		return null
-	#print(Prefab)
 	Prefab=_Prefab
-	CreatePool(count)
-	
-#запускаем функцию заполнение словаря
-func CreatePool(count:int)->void: 
 	for i in range(count): 
 		var _temp=CreateObject(false,i)   #проходим по циклу вызывая функцию заполнения пула
-		pass
+	
+##запускаем функцию заполнение словаря
+#func CreatePool(count:int)->void: 
+#	for i in range(count): 
+#		var _temp=CreateObject(false,i)   #проходим по циклу вызывая функцию заполнения пула
+#		pass
 		
 		
 func CreateObject(isActiveByDefault:bool=false,ID:int=0)->Object:
@@ -37,12 +37,14 @@ func HasFreeElement(): #функция по возврату скрытого о
 	return null
 			
 func GetFreeElement():
-	var element=HasFreeElement()
-	if element!=null:
-		#print("\nthere are free loop ",element," pool.size() ",pool.size()," element._ID ",element.ID)
-		return element
+	var Obj=HasFreeElement()
+	if Obj!=null:
+		#print("\nthere are free loop ",element," pool.size() ",pool.size()," element.ID ",element.ID)
+		return Obj
 	if AutoExpand:
 		var temp=CreateObject(true,pool.size())
 		#print("\nnew obj loop ",temp," pool.size() ",pool.size()," temp._ID ",temp._ID)
 		return temp #если все скрытые заняты создаем новый
 		
+func get_size_pool()->int:
+	return pool.size()

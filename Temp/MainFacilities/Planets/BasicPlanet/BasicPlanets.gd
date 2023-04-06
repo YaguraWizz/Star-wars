@@ -84,8 +84,3 @@ func get_Description()->String:
 #------------------------------------------------
 func get_IDS()->Object:
 	return get_node_or_null("IntrusionDetectionSystem")
-
-
-func _on_FirePlanet_area_entered(area):
-	print(area)
-	pass # Replace with function body.

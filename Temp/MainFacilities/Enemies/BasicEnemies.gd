@@ -4,16 +4,19 @@ export var ID:int=0
 export var Name:String 
 export var Damag:float=0.0
 export var Speed:float=0.0 
-export var stak_EnemiesHP:int
-export var EnemiesHP:int
+export var stak_EnemiesHP:int=1 setget set_stak_EnemiesHP
 export var Gold:int
 export var Metal:int=0 
 export var Description:String 
 export var Sounds:String
+onready var Im_Alive=true
+onready var EnemiesHP:int
 #-------------------------------------------------------------------------------
 var IBootedUp=false setget , _get_IBootedUp
 func _get_IBootedUp()->bool:
 	return IBootedUp
+func _get_Im_Alive()->bool:
+	return Im_Alive
 #-------------------------------------------------------------------------------
 func _ready():
 	IBootedUp=true
@@ -21,6 +24,7 @@ func _ready():
 #------------------------------------------------
 func set_stak_EnemiesHP(new_max_hp:int)->void:
 	stak_EnemiesHP=new_max_hp
+	set_EnemiesHP(stak_EnemiesHP)
 func get_stak_EnemiesHP()->int:
 	return stak_EnemiesHP
 func set_EnemiesHP(new_hp:int)->void:
@@ -29,6 +33,11 @@ func get_EnemiesHP()->int:
 	return EnemiesHP
 func take_damag(damage_taken:int)->void:
 	set_EnemiesHP(int(get_EnemiesHP()-damage_taken))
+	if get_EnemiesHP()<=0:
+		Im_Alive=false
+		I_died()
+func I_died()->void:
+	pass
 #------------------------------------------------
 
 func set_Damag(new_Damag:float)->void:

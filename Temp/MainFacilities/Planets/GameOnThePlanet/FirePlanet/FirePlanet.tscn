@@ -5,7 +5,7 @@
 [ext_resource path="res://MainFacilities/Defenders/IntrusionDetectionSystem/IntrusionDetectionSystem.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 472.716
+radius = 315.014
 
 [node name="FirePlanet" instance=ExtResource( 1 )]
 
@@ -17,5 +17,3 @@ texture = ExtResource( 2 )
 
 [node name="IntrusionDetectionSystem" parent="." index="2" instance=ExtResource( 3 )]
 Icon = ""
-
-[connection signal="area_entered" from="." to="." method="_on_FirePlanet_area_entered"]

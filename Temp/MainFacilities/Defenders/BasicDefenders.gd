@@ -6,7 +6,7 @@ export var ID:int=0 setget set_ID, get_ID
 export var Icon:String setget set_Path_Icon, get_Path_Icon
 export var Name:String setget set_Name, get_Name
 export var Level:int=1 setget Level_up, get_Level
-export var Speed:float=0.0 setget set_Speed, get_Speed
+export var Speed:float=1.0 setget set_Speed, get_Speed
 export var Gold:int=0 setget set_Gold, get_Gold
 export var Metal:int=0 setget set_Metal, get_Metal
 export var Description:String setget set_Description, get_Description

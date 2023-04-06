@@ -2,23 +2,30 @@ extends Node2D
 
 
 onready var PrefabEnemisAsteroids:String="res://MainFacilities/Enemies/AsteroidsAndComets/BasicAsteroids/BasicAsteroids.tscn"
-var pool:BassicPool
-var StartingNumberOfAsteroids:int=10
+onready var StartingNumberOfAsteroids:int=10
+var poolEnemisAsteroids:BassicPool
 var CastomTimer=0
 func _ready():
 	print("ready of name BasicWeapon:"+ $".".get_name())
-	pool=BassicPool.new(PrefabEnemisAsteroids,StartingNumberOfAsteroids)
+	poolEnemisAsteroids=BassicPool.new(PrefabEnemisAsteroids,StartingNumberOfAsteroids)
+	poolEnemisAsteroids.GetFreeElement().get_name()
+	#print("Pool size Asteroids ",poolEnemisAsteroids.get_size_pool())
 	pass
 
 func _process(delta):
 	CastomTimer+=delta
-	if CastomTimer>=6:
-		var Asteroid=pool.GetFreeElement()
+	if CastomTimer>=2:
+		var Asteroid=poolEnemisAsteroids.GetFreeElement()
 		if Asteroid==null:return
-		Asteroid.position=get_start_position()
 		Asteroid.set_Speed(90)
+		Asteroid.position=get_start_position()
+		Asteroid.set_EnemiesHP(Asteroid.get_stak_EnemiesHP())
 		Asteroid.Destination=Global.PLANET.global_position
-		add_child(Asteroid)
+		if !Asteroid._get_IBootedUp():
+			#Global.PLANET.get_node("Asteroids").add_child(Asteroid)
+			add_child(Asteroid)
+		else:
+			Asteroid._Birth_process()
 		CastomTimer=0
 	pass
 

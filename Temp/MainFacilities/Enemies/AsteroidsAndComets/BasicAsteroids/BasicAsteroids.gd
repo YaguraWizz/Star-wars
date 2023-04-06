@@ -1,7 +1,7 @@
 extends BasicEnemies
 class_name BasicAsteroids
 #------------------------------------------------------------------------------
-export var TimeLive:int=3
+export var TimeLive:int=90
 #-------------------------------------------------------------------------------
 export var is_it_an_active_object:bool=false
 #-------------------------------------------------------------------------------
@@ -27,17 +27,18 @@ func _get_is_it_an_active_object()->bool:
 #-------------------------------------------------------------------------------
 func _ready():
 	set_Icon()
-	asteroid_icon.set_hframes(66)
 	_Animation.play("Flight")
 #-------------------------------------------------------------------------------
 func _Birth_process():
 	show()
 	set_Icon()
+	.set_EnemiesHP(.get_stak_EnemiesHP())
 	asteroid_icon.show()
 	explosion_icon.hide()
 	_Timer.set_wait_time(TimeLive)
 	_Timer.start()
 	_Animation.play("Flight")
+	colision=false
 	pass
 #-------------------------------------------------------------------------------
 func set_Icon()->void:
@@ -46,7 +47,7 @@ func set_Icon()->void:
 	asteroid_icon.set_texture(new_Icon)
 #-------------------------------------------------------------------------------
 func _process(delta):
-	if _get_is_it_an_active_object() and !colision:
+	if _get_is_it_an_active_object() and !colision and ._get_Im_Alive():
 		look_at(Destination)
 		move_to_destination(Destination,delta)
 
@@ -60,17 +61,17 @@ func _Death_process():
 	asteroid_icon.hide()
 	explosion_icon.show()
 	_Animation.play("Explosion")
-	_set_is_it_an_active_object(false)
+	Global.PLANET.get_IDS().clear_target_array(self,"ded")
 	pass
 #-------------------------------------------------------------------------------
 
 
 #--------------------------------------------------
 func _on_BasicAsteroids_area_entered(area):
-	print(area)
-	colision=true
-	area.take_damag(.get_damag())
-	_Death_process()
+	if area==Global.PLANET:
+		colision=true
+		area.take_damag(.get_Damag())
+		_Death_process()
 #--------------------------------------------------
 
 #--------------------------------------------------

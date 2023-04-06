@@ -17,7 +17,7 @@ onready var antialiased_line_2d = $AntialiasedLine2D
 onready var line_2d = $Line2D
 
 #-------------------------------------------------------------------------------
-var Direction:Vector2 
+var Destination:Vector2 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func _set_is_it_an_active_object(the_new_activity_state_of_the_object:bool)->void:
@@ -42,10 +42,14 @@ func _Birth_process():
 #-------------------------------------------------------------------------------
 func _process(delta):
 	if _get_is_it_an_active_object():
-		global_position += Direction*delta
+		move_to_destination(Destination,delta)
 	pass
 #-------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------
+func move_to_destination(_Destination,_delta):
+	var direction = (_Destination - position).normalized()
+	position += direction * get_Speed() * _delta
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 func _Death_process():
 	hide()
@@ -60,11 +64,11 @@ func get_ID()->int:
 #--------------------------------------------------
 
 #--------------------------------------------------
-func set_Direction(_Direction:Vector2)->void:
-	if _Direction!=null:
-		Direction=_Direction
-func get_Direction()->Vector2:
-	return Direction
+func set_Destination(_Destination:Vector2)->void:
+	if _Destination!=null:
+		Destination=_Destination
+func get_Destination()->Vector2:
+	return Destination
 #--------------------------------------------------
 
 #--------------------------------------------------

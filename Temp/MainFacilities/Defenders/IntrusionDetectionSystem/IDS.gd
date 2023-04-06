@@ -7,13 +7,15 @@ export  var CoefficientLevelUP:float=3.0/2
 onready var target_Enemy:Dictionary = {}
 onready var sprite = get_node("Icon")
 onready var PrefabBullet:String="res://MainFacilities/Defenders/GroundForce/GroundGuns/BasicBullet/BasicBullet.tscn"
+onready var StartingNumberOfBullets:int=10
 onready var poolBullet:BassicPool
-onready var StartingNumberOfBullets:int=100
 #-------------------------------------------------------------------------------
 func _ready():
 	print("ready of name BasicWeapon:"+ $".".get_name())
 	poolBullet=BassicPool.new(PrefabBullet,StartingNumberOfBullets)
-
+	poolBullet.AutoExpand=true
+	print(poolBullet.GetFreeElement().get_name())
+#	print("Pool size Bullet ",poolBullet.get_size_pool())
 #-----LEVEL_UP------------------------------------------------------------------
 func Level_up(_plug:int)->void:
 	if !_get_IBootedUp():return
@@ -72,21 +74,20 @@ func _fire_Weapons()->void:
 			target_index += 1
 			
 		# цель нашлаcь, стреляем
-		gun.set_Asteroid(target)
+		gun.set_Enemie(target)
 		
 	return
 func _on_IDS_area_entered(area)->void:
-	print(area)
-	target_Enemy[area.spawn_id] = area
+	target_Enemy[area.ID] = area
 	#print("Scanner_area Weapon count ", get_tree().get_nodes_in_group("Weapon").size())
-	#print("area.spawn_id: ", area.spawn_id)
+	print("area.ID: ", area.ID)
 func clear_target_array(dead_asteroid,_strr:String)->void:
 	# убрать мертвый астероид из листа обнаруженых
-	var _temp=target_Enemy.erase(dead_asteroid.spawn_id)
+	var _temp=target_Enemy.erase(dead_asteroid.ID)
 	
 	# отменить стрельбу пушек по умершему 
 	_cancel_gun_fire(dead_asteroid)
-	#print("clear_array dead_Asteroid", strr, "[spawn_id: ", dead_asteroid.spawn_id, "]")
+	print("clear_array dead_Asteroid", _strr, "[ID: ", dead_asteroid.ID, "]")
 func _get_available_guns() -> BasicGroundWeapons:
 	#найти пушки, из них выбрать пушки который не стреляют
 	var Weapons = get_tree().get_nodes_in_group("BasicGroundWeapons")
@@ -102,9 +103,9 @@ func _validate_targets() -> Array:
 	if target_Enemy.size() < 1:
 		return []
 	
-	for spawn_id in target_Enemy.keys():
-		if !is_instance_valid(target_Enemy[spawn_id]):
-			var _temp=target_Enemy.erase(spawn_id)
+	for ID in target_Enemy.keys():
+		if !is_instance_valid(target_Enemy[ID]):
+			var _temp=target_Enemy.erase(ID)
 			
 	return target_Enemy.values()
 func _cancel_gun_fire(dead_asteroid)->void:
@@ -115,8 +116,8 @@ func _cancel_gun_fire(dead_asteroid)->void:
 		if !d.get_is_shooting_Legal():
 			continue
 		# если пушка стреляла по астероиду с тем же номером то сбрасывает цель стрельбы	
-		if d.get_asteroid_id() == dead_asteroid.spawn_id:
-			d.set_Asteroid(null)
+		if d.get_Enemie_id() == dead_asteroid.ID:
+			d.set_Enemie(null)
 #-------------------------------------------------------------------------------
 func get_pool()->BassicPool:
 	if poolBullet!=null:
