@@ -10,10 +10,10 @@
 scale = Vector2( 0.5, 0.5 )
 collision_mask = 8
 
-[node name="EnemyManager" type="Node2D" parent="."]
-script = ExtResource( 3 )
-
 [node name="Anti_AircraftWeapon" parent="." instance=ExtResource( 2 )]
 scale = Vector2( 0.5, 0.5 )
 
 [node name="MyPool" type="Node2D" parent="."]
+
+[node name="EnemyManager" type="Node2D" parent="."]
+script = ExtResource( 3 )

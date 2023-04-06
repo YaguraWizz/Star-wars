@@ -6,16 +6,17 @@ onready var StartingNumberOfAsteroids:int=10
 var poolEnemisAsteroids:BassicPool
 var CastomTimer=0
 func _ready():
-	print("ready of name BasicWeapon:"+ $".".get_name())
+	print("ready of name:"+ $".".get_name())
 	poolEnemisAsteroids=BassicPool.new(PrefabEnemisAsteroids,StartingNumberOfAsteroids)
-	poolEnemisAsteroids.GetFreeElement().get_name()
+	print("EnemyManager ",poolEnemisAsteroids.GetFreeElement().get_name()," ID ",poolEnemisAsteroids.ID)
+	
 	#print("Pool size Asteroids ",poolEnemisAsteroids.get_size_pool())
 	pass
 
 func _process(delta):
 	CastomTimer+=delta
 	if CastomTimer>=2:
-		var Asteroid=poolEnemisAsteroids.GetFreeElement()
+		var Asteroid:BasicAsteroids=poolEnemisAsteroids.GetFreeElement()
 		if Asteroid==null:return
 		Asteroid.set_Speed(90)
 		Asteroid.position=get_start_position()

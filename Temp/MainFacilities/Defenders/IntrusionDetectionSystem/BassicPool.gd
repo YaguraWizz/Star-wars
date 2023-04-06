@@ -3,28 +3,24 @@ class_name BassicPool
 export var Prefab:String
 export var AutoExpand:bool=false
 export var pool:Dictionary={}
-
+var ID:int
 
 func _init(_Prefab:String="",count:int=0):
+	ID=get_instance_id()
 	if !_Prefab.is_abs_path():
 		print("Error class WeaponElementPool: _Path_Weapon_Element is not a path")
 		return null
 	Prefab=_Prefab
 	for i in range(count): 
 		var _temp=CreateObject(false,i)   #проходим по циклу вызывая функцию заполнения пула
-	
-##запускаем функцию заполнение словаря
-#func CreatePool(count:int)->void: 
-#	for i in range(count): 
-#		var _temp=CreateObject(false,i)   #проходим по циклу вызывая функцию заполнения пула
-#		pass
-		
-		
-func CreateObject(isActiveByDefault:bool=false,ID:int=0)->Object:
+		print("CreateObject ",pool[i])
+
+
+func CreateObject(isActiveByDefault:bool=false,ID_:int=0)->Object:
 	var _CreateObject=load(Prefab).instance()
 	_CreateObject._set_is_it_an_active_object(isActiveByDefault) #Выключаем видимость
-	pool[ID]=_CreateObject  #добавляем в словарь
-	_CreateObject.ID=ID
+	pool[ID_]=_CreateObject  #добавляем в словарь
+	_CreateObject.ID=ID_
 	#print("\npool[ID] ",pool[ID]," _CreateObject._ID ",_CreateObject._ID," ID ",ID)
 	return _CreateObject
 	

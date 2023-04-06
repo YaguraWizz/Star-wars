@@ -16,7 +16,7 @@ var IBootedUp=false setget , _get_IBootedUp
 
 #--------------------------------------------------------------
 func _ready():
-	print("ready of name BasicWeapon:"+ $".".get_name())
+	print("ready of name BasicPlanets:"+ $".".get_name())
 	Global.PLANET=self
 	IBootedUp=true
 #--------------------------------------------------------------

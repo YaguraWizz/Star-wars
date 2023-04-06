@@ -11,10 +11,14 @@ onready var StartingNumberOfBullets:int=10
 onready var poolBullet:BassicPool
 #-------------------------------------------------------------------------------
 func _ready():
+	Global.IDS=self
 	print("ready of name BasicWeapon:"+ $".".get_name())
 	poolBullet=BassicPool.new(PrefabBullet,StartingNumberOfBullets)
 	poolBullet.AutoExpand=true
-	print(poolBullet.GetFreeElement().get_name())
+	Global.IDSBullet=poolBullet
+	print("IntrusionDetectionSystem: pool name ",poolBullet.GetFreeElement().get_name()," ID ",poolBullet.ID)
+	for i in poolBullet.get_size_pool():
+		print("poolBullet ",poolBullet.pool[i])
 #	print("Pool size Bullet ",poolBullet.get_size_pool())
 #-----LEVEL_UP------------------------------------------------------------------
 func Level_up(_plug:int)->void:

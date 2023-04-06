@@ -50,7 +50,6 @@ func _process(delta):
 	if _get_is_it_an_active_object() and !colision and ._get_Im_Alive():
 		look_at(Destination)
 		move_to_destination(Destination,delta)
-
 	pass
 #-------------------------------------------------------------------------------
 func move_to_destination(_Destination,_delta):

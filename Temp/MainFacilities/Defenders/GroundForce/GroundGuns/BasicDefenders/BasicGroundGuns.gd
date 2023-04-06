@@ -35,12 +35,14 @@ func _ready():
 	set_Damage_per_second()
 	set_Dictionary_Of_GlobalNodePositions()
 	set_pool()
+	for i in PoolWeaponElement.get_size_pool():
+		print("PoolWeaponElement ",PoolWeaponElement.pool[i])
+	print("BasicWeapon: pool name ",PoolWeaponElement.GetFreeElement().get_name()," ID ",PoolWeaponElement.ID)
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 #ВАЖНО ПОЭТОМУ СВЕРХУ
 func set_pool()->void:
-	var tempPool=Global.PLANET.get_IDS().get_pool()
-	print(tempPool.GetFreeElement().get_name())
+	var tempPool=Global.IDSBullet
 	if tempPool!=null:
 		PoolWeaponElement=tempPool
 	else:
@@ -244,7 +246,7 @@ func Weapon_Element_Initialization():
 
 	match get_Dictionary_Of_GlobalNodePositions().size():
 		NUM_PER_SHOT.ONE:
-			var New_Weapon_Element_One = PoolWeaponElement.GetFreeElement()
+			var New_Weapon_Element_One:BasicBullet = PoolWeaponElement.GetFreeElement()
 			if New_Weapon_Element_One==null:
 				print("Error class BasicWeapon: .Weapon_Element_Initialization: PoolWeaponElement.GetFreeElement()  return is null")
 				return null
@@ -260,8 +262,8 @@ func Weapon_Element_Initialization():
 
 		NUM_PER_SHOT.TWO:
 			pass
-			var New_Weapon_Element_One = PoolWeaponElement.GetFreeElement()
-			var New_Weapon_Element_Two = PoolWeaponElement.GetFreeElement()
+			var New_Weapon_Element_One:BasicBullet = PoolWeaponElement.GetFreeElement()
+			var New_Weapon_Element_Two:BasicBullet = PoolWeaponElement.GetFreeElement()
 
 			if New_Weapon_Element_One==null or New_Weapon_Element_Two==null:
 				print("Error class BasicWeapon: .Weapon_Element_Initialization: PoolWeaponElement.GetFreeElement()  return is null")
@@ -286,7 +288,7 @@ func Weapon_Element_Initialization():
 			return null
 #------------------------------------------------------------------------------------------------------------------------------
 
-func Set_New_Weapon_Element_Parameters(NEW_WEAPON_ELEMENT:Object,TARGET_ENEMY)->void:
+func Set_New_Weapon_Element_Parameters(NEW_WEAPON_ELEMENT:BasicBullet,TARGET_ENEMY:BasicAsteroids)->void:
 	NEW_WEAPON_ELEMENT.set_Damag(get_Damage())
 	NEW_WEAPON_ELEMENT.set_Speed(.get_Speed())
 	NEW_WEAPON_ELEMENT.set_Destination(intercept_point(TARGET_ENEMY))
